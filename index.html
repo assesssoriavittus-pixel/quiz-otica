@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nossa Ótica — Seu óculos novo sem sair de casa</title>
+<meta name="description" content="Responda perguntas rápidas e receba atendimento no WhatsApp. Entregamos seu óculos na sua casa.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👓</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     VITTUS — DESIGN SYSTEM (preto dominante, branco nos textos,
+     azul SOMENTE em detalhes mínimos)
+     ============================================================ */
+  :root {
+    /* PRETO E BRANCO — branco dominante (70%), detalhes em preto */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F7F7F5;
+
+    --bg-option: rgba(0, 0, 0, 0.018);
+    --bg-option-hover: rgba(0, 0, 0, 0.045);
+    --bg-option-selected: rgba(0, 0, 0, 0.06);
+
+    --accent: #000000;
+    --accent-light: #111111;
+    --accent-glow: rgba(0, 0, 0, 0.15);
+
+    --ink: #0A0A0A;
+    --ink-90: rgba(0, 0, 0, 0.88);
+    --ink-60: rgba(0, 0, 0, 0.55);
+    --ink-35: rgba(0, 0, 0, 0.35);
+    --ink-15: rgba(0, 0, 0, 0.14);
+    --ink-08: rgba(0, 0, 0, 0.06);
+
+    --border-default: rgba(0, 0, 0, 0.16);
+    --border-hover: rgba(0, 0, 0, 0.45);
+    --border-selected: rgba(0, 0, 0, 0.85);
+
+    --whats: #25D366;
+    --whats-dark: #1DA851;
+
+    --font-primary: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+    --transition-fast: 0.2s ease;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-primary);
+    color: var(--ink);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- barra de progresso fixa ---------- */
+  .progress-bar-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: rgba(0,0,0,.07); z-index: 100; }
+  .progress-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    box-shadow: 0 0 12px var(--accent-glow);
+    transition: width .6s cubic-bezier(.4,0,.2,1);
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ---------- header / logo ---------- */
+  .header { display: flex; justify-content: center; align-items: center; padding: 16px 0 12px; position: relative; z-index: 10; }
+  .logo-img { height: 85px; width: auto; object-fit: contain; display: block; }
+  .header::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; opacity: .5;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 25%, var(--accent) 50%, var(--accent-light) 75%, var(--accent) 100%);
+  }
+  .header::before {
+    content: ''; position: absolute; bottom: -8px; left: 0; width: 100%; height: 20px; z-index: -1;
+    background: linear-gradient(180deg, rgba(0,0,0,.045) 0%, transparent 100%);
+  }
+
+  /* ---------- glow / atmosfera ---------- */
+  .glow { position: fixed; pointer-events: none; z-index: 0; }
+  .glow-top { top: -60px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 600px; height: 250px;
+    background: radial-gradient(ellipse at top center, rgba(0,0,0,.035) 0%, transparent 70%); }
+  .glow-bottom { bottom: 0; left: 0; width: 100%; height: 350px;
+    background: radial-gradient(ellipse at bottom left, rgba(0,0,0,.03) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(0,0,0,.03) 0%, transparent 50%); }
+
+  /* ---------- container ---------- */
+  .quiz-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 14px 22px 40px; position: relative; z-index: 1; }
+  .screen { width: 100%; max-width: 580px; animation: fadeSlideIn .45s cubic-bezier(.4,0,.2,1) both; }
+  @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  .stagger > * { animation: fadeSlideIn .5s cubic-bezier(.4,0,.2,1) both; }
+  .stagger > *:nth-child(1) { animation-delay: .02s; } .stagger > *:nth-child(2) { animation-delay: .07s; }
+  .stagger > *:nth-child(3) { animation-delay: .12s; } .stagger > *:nth-child(4) { animation-delay: .17s; }
+  .stagger > *:nth-child(5) { animation-delay: .22s; } .stagger > *:nth-child(6) { animation-delay: .27s; }
+  .stagger > *:nth-child(7) { animation-delay: .32s; }
+
+  /* ---------- badge ---------- */
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px;
+    border-radius: 50px; border: 1px solid var(--ink-15); background: #FFFFFF;
+    font-size: .62rem; font-weight: 700; letter-spacing: 2px; color: var(--ink-60);
+    text-transform: uppercase; margin-bottom: 18px;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent-glow); animation: pulse-dot 2s ease-in-out infinite; }
+  @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+
+  /* ---------- contador / pergunta ---------- */
+  .step-counter { font-size: .85rem; color: var(--ink-35); margin-bottom: 8px; font-weight: 500; }
+  .step-current { color: var(--accent-light); font-weight: 700; }
+  h1.question, h2.question {
+    font-size: 1.55rem; font-weight: 900; line-height: 1.22; color: var(--ink);
+    margin-bottom: 14px; letter-spacing: -.02em;
+  }
+  .subtitle { font-size: .9rem; line-height: 1.55; color: var(--ink-60); margin-bottom: 26px; }
+  .subtitle strong { color: var(--ink-90); }
+  .subtitle u { color: var(--ink-90); text-decoration-color: var(--ink-35); text-underline-offset: 3px; }
+
+  /* ---------- opções ---------- */
+  .options-list { display: flex; flex-direction: column; gap: 12px; }
+  .option {
+    display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+    border-radius: 10px; border: 1px solid var(--border-default); background: var(--bg-option);
+    cursor: pointer; transition: all var(--transition-fast); width: 100%; text-align: left;
+    font-family: var(--font-primary); color: var(--ink-90);
+  }
+  .option:hover { border-color: var(--border-hover); background: var(--bg-option-hover); }
+  .option:active { transform: scale(.99); }
+  .option-radio {
+    width: 20px; height: 20px; min-width: 20px; border-radius: 50%;
+    border: 1.5px solid var(--ink-35); position: relative; transition: all var(--transition-fast);
+  }
+  .option-radio::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%) scale(0); width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+  }
+  .option:hover .option-radio { border-color: var(--accent); }
+  .option-text { font-size: .92rem; font-weight: 500; line-height: 1.35; }
+  .option.other-opt { border-style: dashed; }
+  .option.other-opt .option-text { color: var(--ink-60); }
+
+  /* ---------- campo "outro" / inputs ---------- */
+  .free { display: none; margin-top: 14px; }
+  .free.open { display: block; animation: fadeSlideIn .3s ease both; }
+  .free textarea, .txt input {
+    width: 100%; border: 1px solid var(--border-hover); border-radius: 10px;
+    background: var(--bg-option); padding: 15px 16px;
+    font-family: var(--font-primary); font-size: 1rem; color: var(--ink);
+    outline: none; resize: none; transition: border-color var(--transition-fast);
+  }
+  .free textarea::placeholder, .txt input::placeholder { color: var(--ink-35); }
+  .free textarea:focus, .txt input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,0,0,.07); }
+  .free textarea { min-height: 88px; }
+
+  /* ---------- botões ---------- */
+  .cta-button {
+    display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+    padding: 16px 30px; margin-top: 18px; border-radius: 8px; border: none; cursor: pointer;
+    background: var(--ink); color: #FFFFFF;
+    font-family: var(--font-primary); font-size: .95rem; font-weight: 700;
+    transition: all .35s ease; box-shadow: 0 4px 18px rgba(0,0,0,.22);
+    position: relative; overflow: hidden;
+  }
+  .cta-button::before {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent); transition: left .5s ease;
+  }
+  .cta-button:hover { background: #2B2B2B; transform: translateY(-1px); box-shadow: 0 6px 26px rgba(0,0,0,.3); }
+  .cta-button:hover::before { left: 100%; }
+  .cta-button:active { transform: none; }
+  .cta-button:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+  .cta-button.whats { font-size: 1rem; padding: 17px 30px; }
+
+  .back-btn {
+    display: inline-block; margin-top: 20px; padding: 6px 0; background: none; border: none;
+    color: var(--accent-light); font-size: .82rem; font-weight: 500;
+    font-family: var(--font-primary); cursor: pointer; opacity: .6; transition: all var(--transition-fast);
+  }
+  .back-btn:hover { color: var(--ink); opacity: 1; }
+  .skip-btn {
+    background: none; border: none; color: var(--ink-35); font-family: var(--font-primary);
+    font-size: .82rem; text-decoration: underline; text-underline-offset: 3px;
+    cursor: pointer; margin: 18px auto 0; display: block;
+  }
+  .skip-btn:hover { color: var(--ink-60); }
+
+  /* ---------- capa ---------- */
+  .hero { padding-top: 8px; }
+  .hero h1 { font-size: clamp(1.9rem, 8vw, 2.4rem); font-weight: 900; line-height: 1.15; letter-spacing: -.02em; margin-bottom: 14px; color: var(--ink); }
+  .hero h1 .highlight { font-style: italic; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; color: var(--ink); }
+  .hero .subtitle { max-width: 46ch; }
+  .trust { display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
+  .trust span { font-size: .76rem; color: var(--ink-60); display: flex; align-items: center; gap: 6px; }
+  .trust b { color: var(--accent-light); font-weight: 700; }
+
+  /* ---------- guia de rostos ---------- */
+  .faces-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .face-card {
+    background: #FFFFFF; border: 1px solid var(--border-default); border-radius: 12px;
+    padding: 10px 10px 14px; text-align: center; cursor: pointer; transition: all var(--transition-fast);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .face-card:hover { border-color: var(--border-hover); background: var(--bg-option-hover); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+  .face-card.sel { border-color: var(--ink); background: var(--bg-option-selected); box-shadow: 0 6px 20px rgba(0,0,0,.12); transform: translateY(-2px); }
+  .face-card img { width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-default); margin-bottom: 8px; display: block; transition: all var(--transition-fast); }
+  .face-card:hover img { border-color: var(--border-hover); }
+  .face-card.sel img { border-color: var(--ink); box-shadow: 0 0 0 2px rgba(0,0,0,0.05); }
+  .face-card b { font-size: .88rem; font-weight: 700; display: block; color: var(--ink); }
+  .face-card small { font-size: .7rem; color: var(--ink-60); line-height: 1.4; display: block; margin-top: 4px; }
+  .face-tip {
+    display: none; margin-top: 14px; border: 1px solid var(--border-hover); border-left: 3px solid var(--accent);
+    background: var(--bg-option); border-radius: 10px; padding: 14px 16px;
+    font-size: .87rem; line-height: 1.6; color: var(--ink-90);
+  }
+  .face-tip.show { display: block; animation: fadeSlideIn .3s ease both; }
+  .face-tip b { color: var(--accent-light); }
+
+  /* ---------- final ---------- */
+  .result-title { font-size: 1.55rem; font-weight: 900; letter-spacing: -.02em; margin-bottom: 12px; }
+  .result-title .highlight { font-style: italic; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; }
+  .summary {
+    border: 1px solid var(--border-default); background: var(--bg-option);
+    border-radius: 12px; padding: 18px; margin: 18px 0 4px;
+  }
+  .summary h3 { font-size: .78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-35); margin-bottom: 12px; }
+  .summary ul { list-style: none; }
+  .summary li { display: flex; justify-content: space-between; gap: 14px; font-size: .87rem; padding: 8px 0; border-bottom: 1px solid var(--ink-08); }
+  .summary li:last-child { border-bottom: none; }
+  .summary li b { color: var(--ink-60); font-weight: 500; flex-shrink: 0; }
+  .summary li span { text-align: right; color: var(--ink-90); font-weight: 600; }
+  .note {
+    border: 1px solid var(--border-hover); border-left: 3px solid var(--accent-light);
+    background: var(--bg-option); border-radius: 10px; padding: 13px 15px;
+    font-size: .84rem; line-height: 1.6; color: var(--ink-90); margin-top: 12px;
+  }
+  .redirect-text { margin-top: 12px; font-size: .75rem; color: var(--ink-35); text-align: center; line-height: 1.6; }
+
+  /* ---------- footer ---------- */
+  .footer { text-align: center; padding: 24px; position: relative; z-index: 1; }
+  .footer p { font-size: .72rem; color: var(--ink-35); letter-spacing: .02em; }
+
+  @media (min-width: 641px) { .logo-img { height: 110px; } h1.question, h2.question { font-size: 1.75rem; } }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-container"><div class="progress-bar" id="bar"></div></div>
+
+<header class="header">
+  <img src="logo.png" alt="Nossa Ótica" class="logo-img" onerror="this.outerHTML='<div style=&quot;font-weight:800;font-size:1.4rem;letter-spacing:.25em;padding:26px 0&quot;>NOSSA ÓTICA</div>'">
+</header>
+
+<div class="glow glow-top"></div>
+<div class="glow glow-bottom"></div>
+
+<main class="quiz-container">
+  <div id="screen" class="screen"></div>
+</main>
+
+<footer class="footer">
+  <p id="footerText">© 2026 Nossa Ótica. Atendimento pelo WhatsApp — leva menos de 1 minuto.</p>
+</footer>
+
+<script>
+/* ================================================================
+   CONFIGURAÇÃO — preencha aqui (é a única parte que precisa mexer)
+   ================================================================ */
+const CONFIG = {
+  // Número do WhatsApp com DDI+DDD, só dígitos. Ex.: 5562999998888
+  whatsapp: '556299266414',                    // ← TROCAR pelo número real
+  otica: 'Nossa Ótica',                         // ← nome da marca
+  marcas: ['[MARCA 1]', '[MARCA 2]', '[MARCA 3]'] // ← marcas de óculos de sol
+};
+
+/* Código de origem do anúncio: o link de cada anúncio aponta pra
+   seusite.com/?origem=SOL  |  ?origem=GRAU  |  ?origem=LENTE  |  ?origem=PROMO1
+   SOL/GRAU/LENTE também pulam a pergunta inicial. */
+const params = new URLSearchParams(location.search);
+const ORIGEM = (params.get('origem') || params.get('cod') || 'SITE').toUpperCase();
+
+/* ---------------- estado ---------------- */
+let answers = [];        // [{k:'Produto', v:'Óculos de grau'}]
+let needsFrame = false;  // caminho de grau inclui armação?
+let isGrau = false;      // algum caminho com receita de grau?
+let histStack = [];      // pilha p/ botão voltar
+let qNum = 0;            // contador de perguntas
+
+const $ = id => document.getElementById(id);
+const screen = $('screen');
+const bar = $('bar');
+
+/* ---------------- definição dos passos ---------------- */
+const STEPS = {
+  nameFirst: { input: true, q: 'Qual o seu nome?', sub: 'Prazer em te conhecer! Vamos montar o óculos perfeito pra você.', key: 'Nome', placeholder: 'Seu nome', progress: 8, next: 'start' },
+  start: {
+    q: 'O que você procura hoje?',
+    sub: 'Montamos seu óculos <strong>sem você sair de casa</strong>. São perguntas rápidas — leva menos de 30 segundos e <u>você não paga nada pela conversa</u>.',
+    key: 'Produto', progress: 16,
+    options: [
+      { t: 'Óculos de grau', next: 'a1' },
+      { t: 'Óculos de sol', next: 'b1' },
+      { t: 'Lente de contato', next: 'c1' },
+      { t: 'Só a lente (já tenho armação)', next: 'd1' }
+    ],
+    otherNext: 'name'
+  },
+
+  /* ---- A) óculos de grau ---- */
+  a1: {
+    q: 'Você está buscando…', key: 'O que precisa', progress: 28,
+    options: [
+      { t: 'O óculos completo (armação + lentes)', next: 'a2', frame: true },
+      { t: 'Só a armação', next: 'a2', frame: true },
+      { t: 'Só as lentes de grau', next: 'a2' }
+    ],
+    otherNext: 'a2'
+  },
+  a2: {
+    q: 'Você já tem a receita do oftalmologista?',
+    sub: 'Aquela com o seu grau.', key: 'Receita', progress: 44, grau: true,
+    options: [
+      { t: 'Sim, tenho', next: 'a3' },
+      { t: 'Não tenho / está vencida', next: 'a3' }
+    ],
+    otherNext: 'a3'
+  },
+  a3: {
+    q: 'Como você mais vai usar o óculos?', key: 'Uso', progress: 58,
+    options: [
+      { t: 'Pra perto (ler, celular)', nextFn: () => needsFrame ? 'faceq' : 'name' },
+      { t: 'Pra longe (dirigir, TV)', nextFn: () => needsFrame ? 'faceq' : 'name' },
+      { t: 'Perto e longe (multifocal)', nextFn: () => needsFrame ? 'faceq' : 'name' },
+      { t: 'Computador (filtro de luz azul)', nextFn: () => needsFrame ? 'faceq' : 'name' }
+    ],
+    otherNextFn: () => needsFrame ? 'faceq' : 'name'
+  },
+
+  /* ---- B) óculos de sol ---- */
+  b1: {
+    q: 'Já tem uma marca preferida?', key: 'Marca', progress: 32,
+    options: [
+      ...CONFIG.marcas.map(m => ({ t: m, next: 'b2' })),
+      { t: 'Quero ver as opções que vocês têm', next: 'b2' }
+    ],
+    otherNext: 'b2', otherLabel: 'Outra marca — escreve aqui'
+  },
+  b2: {
+    q: 'Esse óculos de sol é…', key: 'Grau no solar', progress: 52,
+    options: [
+      { t: 'Sem grau (só proteção mesmo)', next: 'faceq', frame: true },
+      { t: 'Solar COM grau (tenho receita)', next: 'faceq', frame: true, grau: true }
+    ],
+    otherNext: 'faceq'
+  },
+
+  /* ---- C) lente de contato ---- */
+  c1: {
+    q: 'Você já usa lente de contato?', key: 'Experiência', progress: 32,
+    options: [
+      { t: 'Sim, já uso (sei meus dados)', next: 'c2' },
+      { t: 'É a primeira vez', next: 'c2' }
+    ],
+    otherNext: 'c2'
+  },
+  c2: {
+    q: 'Que tipo de lente você quer?', key: 'Tipo de lente', progress: 50,
+    options: [
+      { t: 'De grau (enxergar melhor)', next: 'c3', grau: true },
+      { t: 'Colorida / estética', next: 'c3' },
+      { t: 'Multifocal', next: 'c3', grau: true }
+    ],
+    otherNext: 'c3'
+  },
+  c3: {
+    q: 'Tem a receita/prescrição da lente?',
+    sub: 'A de lente de contato é diferente da do óculos.', key: 'Receita', progress: 68,
+    options: [
+      { t: 'Sim, tenho', next: 'name' },
+      { t: 'Não tenho', next: 'name' }
+    ],
+    otherNext: 'name'
+  },
+
+  /* ---- D) só a lente ---- */
+  d1: {
+    q: 'É lente de grau ou de sol?', key: 'Tipo', progress: 32,
+    options: [
+      { t: 'Lente de grau', next: 'd2', grau: true },
+      { t: 'Lente solar', next: 'd2' }
+    ],
+    otherNext: 'd2'
+  },
+  d2: {
+    q: 'Você tem a receita com o grau?', key: 'Receita', progress: 52,
+    options: [
+      { t: 'Sim', next: 'd3' },
+      { t: 'Não', next: 'd3' }
+    ],
+    otherNext: 'd3'
+  },
+  d3: {
+    q: 'Sua armação atual 📸', info: true, progress: 66,
+    sub: 'No WhatsApp, vamos te pedir uma foto da sua armação atual — assim conferimos o encaixe da lente certinho. Deixa ela por perto!',
+    next: 'name'
+  },
+
+  /* ---- fechamento ---- */
+  name: { input: true, q: 'Pra finalizar, como é seu nome?', key: 'Nome', placeholder: 'Seu nome', progress: 92, next: 'final' }
+};
+
+/* formatos de rosto: ilustrações reais salvas + recomendação */
+const FACES = [
+  { n: 'Redondo', img: 'homem-e-mulher-com-formato-de-rosto-redondo.jpg', d: 'Bochechas cheias, largura e altura parecidas', r: 'Combina com armações <b>quadradas ou retangulares</b> — dão contorno ao rosto.' },
+  { n: 'Quadrado', img: 'homem-e-mulher-com-formato-de-rosto-quadrado.jpg', d: 'Testa e mandíbula marcadas, traços fortes', r: 'Combina com armações <b>redondas e arredondadas</b> — suavizam os ângulos.' },
+  { n: 'Oval', img: 'b571f935-9258-41bc-8604-d71d58ccfc75.png', d: 'Proporções equilibradas', r: 'Sorte sua! Rosto oval combina com <b>quase todos os modelos</b>.' },
+  { n: 'Coração', img: 'homem-e-mulher-com-formato-de-rosto-coracao.jpg', d: 'Testa larga e queixo fininho', r: 'Combina com armações <b>leves embaixo, gatinho ou arredondadas</b>.' },
+  { n: 'Alongado', img: 'homem-e-mulher-com-formato-de-rosto-oblongo.jpg', d: 'Rosto mais comprido que largo', r: 'Combina com armações <b>maiores e mais altas</b> — "encurtam" o rosto.' },
+  { n: 'Diamante', img: 'homem-e-mulher-com-formato-de-rosto-diamante.jpg', d: 'Maçãs do rosto salientes', r: 'Combina com armações <b>ovais ou gatinho</b>.' }
+];
+
+/* ---------------- motor do quiz ---------------- */
+const badge = '<div class="badge"><span class="badge-dot"></span>Atendimento por WhatsApp</div>';
+const pad = n => String(n).padStart(2, '0');
+
+function setProgress(p) { bar.style.width = p + '%'; }
+function saveHistory(id) { histStack.push({ id, ans: answers.length, frame: needsFrame, grau: isGrau, qn: qNum }); }
+
+function backBtn() { return histStack.length ? '<button class="back-btn" id="btnBack">← Voltar</button>' : ''; }
+function bindBack() {
+  const b = $('btnBack');
+  if (!b) return;
+  b.onclick = () => {
+    const h = histStack.pop();
+    if (!h) return;
+    answers = answers.slice(0, h.ans);
+    needsFrame = h.frame; isGrau = h.grau; qNum = h.qn;
+    render(h.id, true);
+  };
+}
+
+function go(id) { render(id); }
+
+function render(id, isBack) {
+  if (id === 'welcome') return renderWelcome();
+  if (id === 'faceq') return renderFaceQ(isBack);
+  if (id === 'facepick') return renderFacePick(isBack);
+  if (id === 'faces') return renderFaces(isBack);
+  if (id === 'final') return renderFinal();
+  const s = STEPS[id];
+  if (s.input) return renderInput(id, s, isBack);
+  if (s.info) return renderInfo(id, s, isBack);
+  renderOptions(id, s, isBack);
+}
+
+function renderWelcome() {
+  setProgress(4);
+  const known = { GRAU: 'óculos de grau', SOL: 'óculos de sol', LENTE: 'lentes de contato' }[ORIGEM];
+  screen.innerHTML = `
+    <div class="hero stagger">
+      ${badge}
+      <h1>Seu óculos novo <span class="highlight">sem sair de casa</span>.</h1>
+      <p class="subtitle">${known ? `Você veio atrás de <strong>${known}</strong> — ótima escolha.` : 'Me conta o que você precisa.'} Responda perguntas rápidas de <strong>menos de 1 minuto</strong> e receba atendimento direto no WhatsApp, com entrega na sua porta.</p>
+      <button class="cta-button" id="btnStart">Começar agora</button>
+      <div class="trust"><span><b>✓</b> Atendimento humano</span><span><b>✓</b> Resposta rápida</span><span><b>✓</b> Entrega em casa</span></div>
+    </div>`;
+  $('btnStart').onclick = () => {
+    go('nameFirst');
+  };
+}
+
+function renderOptions(id, s, isBack) {
+  if (!isBack) qNum++;
+  setProgress(s.progress);
+  const opts = s.options.map((o, i) =>
+    `<button class="option" data-i="${i}"><span class="option-radio"></span><span class="option-text">${o.t}</span></button>`).join('');
+  screen.innerHTML = `
+    <div class="stagger">
+      ${badge}
+      <div class="step-counter"><span class="step-current">${pad(qNum)}</span> · Pergunta</div>
+      <h2 class="question">${s.q}</h2>
+      ${s.sub ? `<p class="subtitle">${s.sub}</p>` : ''}
+      <div class="options-list">
+        ${opts}
+        <button class="option other-opt" id="btnOther"><span class="option-radio"></span><span class="option-text">✍️ ${s.otherLabel || 'Outro — escreve aqui'}</span></button>
+      </div>
+      <div class="free" id="freeBox">
+        <textarea id="freeTxt" placeholder="Escreve com suas palavras…"></textarea>
+        <button class="cta-button" id="freeGo">Continuar</button>
+      </div>
+      ${backBtn()}
+    </div>`;
+  screen.querySelectorAll('.option[data-i]').forEach(btn => {
+    btn.onclick = () => {
+      const o = s.options[+btn.dataset.i];
+      saveHistory(id);
+      answers.push({ k: s.key, v: o.t });
+      if (o.frame) needsFrame = true;
+      if (o.grau || s.grau) isGrau = true;
+      go(o.next || (o.nextFn && o.nextFn()));
+    };
+  });
+  $('btnOther').onclick = () => { $('freeBox').classList.add('open'); $('freeTxt').focus(); };
+  $('freeGo').onclick = () => {
+    const t = $('freeTxt').value.trim();
+    if (!t) { $('freeTxt').focus(); return; }
+    saveHistory(id);
+    answers.push({ k: s.key, v: t });
+    if (s.grau) isGrau = true;
+    go(s.otherNext || (s.otherNextFn && s.otherNextFn()));
+  };
+  bindBack();
+}
+
+function renderInput(id, s, isBack) {
+  if (!isBack) qNum++;
+  setProgress(s.progress);
+  screen.innerHTML = `
+    <div class="stagger">
+      ${badge}
+      <div class="step-counter"><span class="step-current">${pad(qNum)}</span> · Quase lá</div>
+      <h2 class="question">${s.q}</h2>
+      ${s.sub ? `<p class="subtitle">${s.sub}</p>` : ''}
+      <div class="txt"><input id="inp" type="text" placeholder="${s.placeholder}" autocomplete="off"></div>
+      <button class="cta-button" id="inpGo">Continuar</button>
+      ${backBtn()}
+    </div>`;
+  const inp = $('inp');
+  inp.focus();
+  const submit = () => {
+    const t = inp.value.trim();
+    if (!t) { inp.focus(); return; }
+    saveHistory(id);
+    answers.push({ k: s.key, v: t });
+    go(s.next);
+  };
+  $('inpGo').onclick = submit;
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+  bindBack();
+}
+
+function renderInfo(id, s, isBack) {
+  setProgress(s.progress);
+  screen.innerHTML = `
+    <div class="stagger">
+      ${badge}
+      <h2 class="question">${s.q}</h2>
+      <p class="subtitle">${s.sub}</p>
+      <button class="cta-button" id="infoGo">Combinado</button>
+      ${backBtn()}
+    </div>`;
+  $('infoGo').onclick = () => { saveHistory(id); go(s.next); };
+  bindBack();
+}
+
+function renderFaceQ(isBack) {
+  if (!isBack) qNum++;
+  setProgress(70);
+  screen.innerHTML = `
+    <div class="stagger">
+      ${badge}
+      <div class="step-counter"><span class="step-current">${pad(qNum)}</span> · Pergunta</div>
+      <h2 class="question">Você sabe o formato do seu rosto?</h2>
+      <p class="subtitle">É a dica de ouro pra escolher a armação que mais valoriza você.</p>
+      <div class="options-list">
+        <button class="option" id="fSim"><span class="option-radio"></span><span class="option-text">Sim, já sei</span></button>
+        <button class="option" id="fNao"><span class="option-radio"></span><span class="option-text">Não sei — me ajuda a descobrir!</span></button>
+      </div>
+      ${backBtn()}
+    </div>`;
+  $('fSim').onclick = () => { saveHistory('faceq'); go('facepick'); };
+  $('fNao').onclick = () => { saveHistory('faceq'); window._faceMode = 'guide'; go('faces'); };
+  bindBack();
+}
+
+function renderFacePick(isBack) {
+  setProgress(76);
+  const opts = FACES.map((f, i) =>
+    `<button class="option" data-i="${i}"><span class="option-radio"></span><span class="option-text">${f.n}</span></button>`).join('');
+  screen.innerHTML = `
+    <div class="stagger">
+      ${badge}
+      <h2 class="question">Qual é o formato do seu rosto?</h2>
+      <p class="subtitle">Seleciona o seu formato:</p>
+      <div class="options-list">
+        ${opts}
+      </div>
+      ${backBtn()}
+    </div>`;
+  screen.querySelectorAll('.option[data-i]').forEach(btn => {
+    btn.onclick = () => {
+      const f = FACES[+btn.dataset.i];
+      saveHistory('facepick');
+      answers.push({ k: 'Formato do rosto', v: f.n });
+      go('name');
+    };
+  });
+  bindBack();
+}
+
+function renderFaces(isBack) {
+  setProgress(78);
+  const guide = window._faceMode === 'guide';
+  const cards = FACES.map((f, i) => `
+    <div class="face-card" data-i="${i}">
+      <img src="${f.img}" alt="Formato ${f.n}" loading="lazy">
+      <b>${f.n}</b>
+      <small>${f.d}</small>
+    </div>`).join('');
+  screen.innerHTML = `
+    <div class="stagger">
+      ${badge}
+      <h2 class="question">${guide ? 'Vamos descobrir juntos.' : 'Qual é o seu formato?'}</h2>
+      <p class="subtitle">${guide
+        ? 'Prende o cabelo, olha no espelho de frente (ou tira uma selfie) e vê com qual desses o seu rosto mais parece:'
+        : 'Toca no formato do seu rosto:'}</p>
+      <div class="faces-grid">${cards}</div>
+      <div class="face-tip" id="faceTip"></div>
+      <button class="cta-button" id="faceGo" disabled>Continuar</button>
+      <button class="skip-btn" id="faceSkip">Prefiro pular essa parte</button>
+      ${backBtn()}
+    </div>`;
+  let sel = null;
+  screen.querySelectorAll('.face-card').forEach(c => {
+    c.onclick = () => {
+      screen.querySelectorAll('.face-card').forEach(x => x.classList.remove('sel'));
+      c.classList.add('sel');
+      sel = FACES[+c.dataset.i];
+      const tip = $('faceTip');
+      tip.innerHTML = `<b>${sel.n}:</b> ${sel.r}`;
+      tip.classList.add('show');
+      $('faceGo').disabled = false;
+    };
+  });
+  $('faceGo').onclick = () => {
+    saveHistory('faces');
+    answers.push({ k: 'Formato do rosto', v: sel.n });
+    go('name');
+  };
+  $('faceSkip').onclick = () => {
+    saveHistory('faces');
+    answers.push({ k: 'Formato do rosto', v: 'Prefere ver com a atendente' });
+    go('name');
+  };
+  bindBack();
+}
+
+function renderFinal() {
+  setProgress(100);
+  const nome = (answers.find(a => a.k === 'Nome') || {}).v || '';
+  const rows = answers.map(a => `<li><b>${a.k}</b><span>${a.v}</span></li>`).join('');
+  screen.innerHTML = `
+    <div class="stagger">
+      ${badge}
+      <h2 class="result-title">Prontinho${nome ? ', ' + nome.split(' ')[0] : ''} — seu pedido foi <span class="highlight">montado</span> ✓</h2>
+      <p class="subtitle">Confere o resumo e chama a gente no WhatsApp — sua mensagem já vai prontinha, é só enviar.</p>
+      <div class="summary">
+        <h3>Seu resumo</h3>
+        <ul>${rows}</ul>
+      </div>
+      ${isGrau ? '<div class="note">📸 <b>Dica:</b> deixa a foto da sua <b>receita</b> por perto — vamos te pedir ela no WhatsApp.</div>' : ''}
+      <button class="cta-button whats" id="btnWhats">Chamar no WhatsApp</button>
+      <p class="redirect-text">Atendimento humano · Você não paga nada por essa conversa · Entrega na sua casa</p>
+    </div>`;
+  $('btnWhats').onclick = () => {
+    const lines = [
+      `Oi! Vim pelo quiz da ${CONFIG.otica} (cod: ${ORIGEM})`,
+      '',
+      ...answers.map(a => `▪️ ${a.k}: ${a.v}`)
+    ];
+    const url = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(lines.join('\n'));
+    window.open(url, '_blank');
+  };
+}
+
+/* início */
+render('welcome');
+</script>
+</body>
+</html>
