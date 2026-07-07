@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nossa Ótica — Seu óculos novo sem sair de casa</title>
-<meta name="description" content="Responda perguntas rápidas e receba atendimento no WhatsApp. Entregamos seu óculos na sua casa.">
+<title>Nossa Ótica — Seu óculos novo com atendimento ágil</title>
+<meta name="description" content="Responda perguntas rápidas e garanta um atendimento expresso no WhatsApp para seu óculos novo.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👓</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -240,6 +240,13 @@
   }
   .redirect-text { margin-top: 12px; font-size: .75rem; color: var(--ink-35); text-align: center; line-height: 1.6; }
 
+  /* ---------- destaque exame de vista ---------- */
+  .option.red-opt { border-color: #C53030; background: rgba(197, 48, 48, 0.02); color: #C53030; }
+  .option.red-opt:hover { border-color: #9B2C2C; background: rgba(197, 48, 48, 0.06); }
+  .option.red-opt .option-radio { border-color: rgba(197, 48, 48, 0.5); }
+  .option.red-opt:hover .option-radio { border-color: #9B2C2C; }
+  .option.red-opt .option-radio::after { background: #C53030; }
+
   /* ---------- footer ---------- */
   .footer { text-align: center; padding: 24px; position: relative; z-index: 1; }
   .footer p { font-size: .72rem; color: var(--ink-35); letter-spacing: .02em; }
@@ -299,9 +306,10 @@ const STEPS = {
   nameFirst: { input: true, q: 'Qual o seu nome?', sub: 'Prazer em te conhecer! Vamos montar o óculos perfeito pra você.', key: 'Nome', placeholder: 'Seu nome', progress: 8, next: 'start' },
   start: {
     q: 'O que você procura hoje?',
-    sub: 'Montamos seu óculos <strong>sem você sair de casa</strong>. São perguntas rápidas — leva menos de 30 segundos e <u>você não paga nada pela conversa</u>.',
+    sub: 'Responda rápido para agilizarmos seu atendimento — leva menos de 30 segundos e <u>você não paga nada</u>.',
     key: 'Produto', progress: 16,
     options: [
+      { t: 'Agendar Exame de Vista 🗓️', next: 'final', red: true },
       { t: 'Óculos de grau', next: 'a1' },
       { t: 'Óculos de sol', next: 'b1' },
       { t: 'Lente de contato', next: 'c1' },
@@ -466,10 +474,10 @@ function renderWelcome() {
   screen.innerHTML = `
     <div class="hero stagger">
       ${badge}
-      <h1>Seu óculos novo <span class="highlight">sem sair de casa</span>.</h1>
-      <p class="subtitle">${known ? `Você veio atrás de <strong>${known}</strong> — ótima escolha.` : 'Me conta o que você precisa.'} Responda perguntas rápidas de <strong>menos de 1 minuto</strong> e receba atendimento direto no WhatsApp, com entrega na sua porta.</p>
+      <h1>Seu óculos novo com <span class="highlight">atendimento ágil</span>.</h1>
+      <p class="subtitle">${known ? `Você veio atrás de <strong>${known}</strong> — ótima escolha.` : 'Me conta o que você precisa.'} Responda perguntas rápidas de <strong>menos de 1 minuto</strong> para agilizarmos seu atendimento direto no WhatsApp.</p>
       <button class="cta-button" id="btnStart">Começar agora</button>
-      <div class="trust"><span><b>✓</b> Atendimento humano</span><span><b>✓</b> Resposta rápida</span><span><b>✓</b> Entrega em casa</span></div>
+      <div class="trust"><span><b>✓</b> Atendimento prioritário</span><span><b>✓</b> Resposta rápida</span><span><b>✓</b> 100% gratuito</span></div>
     </div>`;
   $('btnStart').onclick = () => {
     go('nameFirst');
@@ -480,7 +488,7 @@ function renderOptions(id, s, isBack) {
   if (!isBack) qNum++;
   setProgress(s.progress);
   const opts = s.options.map((o, i) =>
-    `<button class="option" data-i="${i}"><span class="option-radio"></span><span class="option-text">${o.t}</span></button>`).join('');
+    `<button class="option${o.red ? ' red-opt' : ''}" data-i="${i}"><span class="option-radio"></span><span class="option-text">${o.t}</span></button>`).join('');
   screen.innerHTML = `
     <div class="stagger">
       ${badge}
@@ -676,7 +684,7 @@ function renderFinal() {
       </div>
       ${isGrau ? '<div class="note">📸 <b>Dica:</b> deixa a foto da sua <b>receita</b> por perto — vamos te pedir ela no WhatsApp.</div>' : ''}
       <button class="cta-button whats" id="btnWhats">Chamar no WhatsApp</button>
-      <p class="redirect-text">Atendimento humano · Você não paga nada por essa conversa · Entrega na sua casa</p>
+      <p class="redirect-text">Atendimento humano · Atendimento agilizado · 100% gratuito</p>
     </div>`;
   $('btnWhats').onclick = () => {
     const msgLines = [];
