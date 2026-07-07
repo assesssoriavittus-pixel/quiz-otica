@@ -679,36 +679,24 @@ function renderFinal() {
       <p class="redirect-text">Atendimento humano · Você não paga nada por essa conversa · Entrega na sua casa</p>
     </div>`;
   $('btnWhats').onclick = () => {
-    const emojiMap = {
-      'Produto': '✨',
-      'O que precisa': '📦',
-      'Receita': '📄',
-      'Uso': '🎯',
-      'Marca': '🏷️',
-      'Grau no solar': '☀️',
-      'Experiência': '🔄',
-      'Tipo de lente': '👁️',
-      'Tipo': '🔍',
-      'Formato do rosto': '👤'
-    };
-
     const msgLines = [];
-    msgLines.push(`*👓 ${CONFIG.otica.toUpperCase()} — RESUMO DO QUIZ*`);
-    msgLines.push(`Olá! Vim pelo quiz da Nossa Ótica. Aqui estão meus dados:`);
+    msgLines.push(`*NOSSA ÓTICA — ATENDIMENTO EXCLUSIVO*`);
+    msgLines.push(`--------------------------------------------`);
+    msgLines.push(`Olá! Finalizei o quiz no site e gostaria de iniciar meu atendimento.`);
     msgLines.push(``);
-    msgLines.push(`👤 *Nome:* ${nome}`);
-    msgLines.push(`📍 *Origem:* ${ORIGEM}`);
+    msgLines.push(`*DADOS DO CLIENTE:*`);
+    msgLines.push(`• *Nome:* ${nome}`);
+    msgLines.push(`• *Origem:* ${ORIGEM}`);
     msgLines.push(``);
-    msgLines.push(`📋 *DETALHES DO PEDIDO:*`);
+    msgLines.push(`*ESPECIFICAÇÕES DO PEDIDO:*`);
 
     uniqueAnswers.forEach(a => {
       if (a.k === 'Nome') return;
-      const emoji = emojiMap[a.k] || '▪️';
-      msgLines.push(`${emoji} *${a.k}:* ${a.v}`);
+      msgLines.push(`• *${a.k}:* ${a.v}`);
     });
 
-    msgLines.push(``);
-    msgLines.push(`💬 Aguardo seu retorno para prosseguirmos!`);
+    msgLines.push(`--------------------------------------------`);
+    msgLines.push(`_Mensagem enviada via Assistente Virtual_`);
 
     const url = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msgLines.join('\n'));
     window.open(url, '_blank');
