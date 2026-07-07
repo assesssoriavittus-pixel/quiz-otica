@@ -8,41 +8,41 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👓</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
-     NOSSA ÓTICA — DESIGN SYSTEM (preto dominante, branco nos textos,
-     azul SOMENTE em detalhes mínimos)
+     NOSSA ÓTICA — DESIGN SYSTEM (Warm Bronze & Soft Alabaster)
      ============================================================ */
   :root {
-    /* PRETO E BRANCO — branco dominante (70%), detalhes em preto */
-    --bg-primary: #FFFFFF;
-    --bg-secondary: #F7F7F5;
+    --bg-primary: #FDFCFB;
+    --bg-secondary: #F7F4F0;
 
-    --bg-option: rgba(0, 0, 0, 0.018);
-    --bg-option-hover: rgba(0, 0, 0, 0.045);
-    --bg-option-selected: rgba(0, 0, 0, 0.06);
+    --bg-option: rgba(156, 128, 94, 0.02);
+    --bg-option-hover: rgba(156, 128, 94, 0.05);
+    --bg-option-selected: rgba(156, 128, 94, 0.09);
 
-    --accent: #000000;
-    --accent-light: #111111;
-    --accent-glow: rgba(0, 0, 0, 0.15);
+    --accent: #9C805E;
+    --accent-light: #BFA78A;
+    --accent-glow: rgba(156, 128, 94, 0.12);
 
-    --ink: #0A0A0A;
-    --ink-90: rgba(0, 0, 0, 0.88);
-    --ink-60: rgba(0, 0, 0, 0.55);
-    --ink-35: rgba(0, 0, 0, 0.35);
-    --ink-15: rgba(0, 0, 0, 0.14);
-    --ink-08: rgba(0, 0, 0, 0.06);
+    --ink: #1E1D1B;
+    --ink-90: rgba(30, 29, 27, 0.90);
+    --ink-60: rgba(30, 29, 27, 0.60);
+    --ink-35: rgba(30, 29, 27, 0.35);
+    --ink-15: rgba(30, 29, 27, 0.14);
+    --ink-08: rgba(30, 29, 27, 0.06);
 
-    --border-default: rgba(0, 0, 0, 0.16);
-    --border-hover: rgba(0, 0, 0, 0.45);
-    --border-selected: rgba(0, 0, 0, 0.85);
+    --border-default: rgba(156, 128, 94, 0.18);
+    --border-hover: rgba(156, 128, 94, 0.45);
+    --border-selected: #9C805E;
 
     --whats: #25D366;
     --whats-dark: #1DA851;
 
-    --font-primary: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
-    --transition-fast: 0.2s ease;
+    --font-heading: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-primary: var(--font-body);
+    --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -83,10 +83,10 @@
   /* ---------- glow / atmosfera ---------- */
   .glow { position: fixed; pointer-events: none; z-index: 0; }
   .glow-top { top: -60px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 600px; height: 250px;
-    background: radial-gradient(ellipse at top center, rgba(0,0,0,.035) 0%, transparent 70%); }
+    background: radial-gradient(ellipse at top center, rgba(156,128,94,.07) 0%, transparent 70%); }
   .glow-bottom { bottom: 0; left: 0; width: 100%; height: 350px;
-    background: radial-gradient(ellipse at bottom left, rgba(0,0,0,.03) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(0,0,0,.03) 0%, transparent 50%); }
+    background: radial-gradient(ellipse at bottom left, rgba(156,128,94,.05) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(156,128,94,.05) 0%, transparent 50%); }
 
   /* ---------- container ---------- */
   .quiz-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 14px 22px 40px; position: relative; z-index: 1; }
@@ -112,8 +112,9 @@
   .step-counter { font-size: .85rem; color: var(--ink-35); margin-bottom: 8px; font-weight: 500; }
   .step-current { color: var(--accent-light); font-weight: 700; }
   h1.question, h2.question {
-    font-size: 1.55rem; font-weight: 900; line-height: 1.22; color: var(--ink);
-    margin-bottom: 14px; letter-spacing: -.02em;
+    font-family: var(--font-heading);
+    font-size: 1.95rem; font-weight: 600; line-height: 1.22; color: var(--ink);
+    margin-bottom: 14px; letter-spacing: -0.01em;
   }
   .subtitle { font-size: .9rem; line-height: 1.55; color: var(--ink-60); margin-bottom: 26px; }
   .subtitle strong { color: var(--ink-90); }
@@ -162,14 +163,14 @@
     padding: 16px 30px; margin-top: 18px; border-radius: 8px; border: none; cursor: pointer;
     background: var(--ink); color: #FFFFFF;
     font-family: var(--font-primary); font-size: .95rem; font-weight: 700;
-    transition: all .35s ease; box-shadow: 0 4px 18px rgba(0,0,0,.22);
+    transition: all .35s ease; box-shadow: 0 4px 18px rgba(30,29,27,.18);
     position: relative; overflow: hidden;
   }
   .cta-button::before {
     content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent); transition: left .5s ease;
   }
-  .cta-button:hover { background: #2B2B2B; transform: translateY(-1px); box-shadow: 0 6px 26px rgba(0,0,0,.3); }
+  .cta-button:hover { background: #353330; transform: translateY(-1px); box-shadow: 0 6px 26px rgba(30,29,27,.25); }
   .cta-button:hover::before { left: 100%; }
   .cta-button:active { transform: none; }
   .cta-button:disabled { opacity: .4; cursor: not-allowed; transform: none; }
@@ -190,8 +191,8 @@
 
   /* ---------- capa ---------- */
   .hero { padding-top: 8px; }
-  .hero h1 { font-size: clamp(1.9rem, 8vw, 2.4rem); font-weight: 900; line-height: 1.15; letter-spacing: -.02em; margin-bottom: 14px; color: var(--ink); }
-  .hero h1 .highlight { font-style: italic; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; color: var(--ink); }
+  .hero h1 { font-family: var(--font-heading); font-size: clamp(2.3rem, 8vw, 2.9rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 14px; color: var(--ink); }
+  .hero h1 .highlight { font-style: italic; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px; color: var(--ink); }
   .hero .subtitle { max-width: 46ch; }
   .trust { display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap; }
   .trust span { font-size: .76rem; color: var(--ink-60); display: flex; align-items: center; gap: 6px; }
@@ -220,8 +221,8 @@
   .face-tip b { color: var(--accent-light); }
 
   /* ---------- final ---------- */
-  .result-title { font-size: 1.55rem; font-weight: 900; letter-spacing: -.02em; margin-bottom: 12px; }
-  .result-title .highlight { font-style: italic; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; }
+  .result-title { font-family: var(--font-heading); font-size: 1.95rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 12px; }
+  .result-title .highlight { font-style: italic; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
   .summary {
     border: 1px solid var(--border-default); background: var(--bg-option);
     border-radius: 12px; padding: 18px; margin: 18px 0 4px;
@@ -251,7 +252,7 @@
 <div class="progress-bar-container"><div class="progress-bar" id="bar"></div></div>
 
 <header class="header">
-  <img src="logo.png" alt="Nossa Ótica" class="logo-img" onerror="this.outerHTML='<div style=&quot;font-weight:800;font-size:1.4rem;letter-spacing:.25em;padding:26px 0&quot;>NOSSA ÓTICA</div>'">
+  <img src="logo.png" alt="Nossa Ótica" class="logo-img" onerror="this.outerHTML='<div style=&quot;font-family:var(--font-heading);font-weight:600;font-size:1.7rem;letter-spacing:.12em;padding:26px 0&quot;>NOSSA ÓTICA</div>'">
 </header>
 
 <div class="glow glow-top"></div>
@@ -306,7 +307,7 @@ const STEPS = {
       { t: 'Lente de contato', next: 'c1' },
       { t: 'Só a lente (já tenho armação)', next: 'd1' }
     ],
-    otherNext: 'name'
+    otherNext: 'final'
   },
 
   /* ---- A) óculos de grau ---- */
@@ -329,14 +330,17 @@ const STEPS = {
     otherNext: 'a3'
   },
   a3: {
-    q: 'Como você mais vai usar o óculos?', key: 'Uso', progress: 58,
+    q: 'Qual será o uso principal do seu novo óculos?',
+    sub: 'Escolha a opção que melhor descreve sua necessidade no dia a dia.',
+    key: 'Uso', progress: 58,
     options: [
-      { t: 'Pra perto (ler, celular)', nextFn: () => needsFrame ? 'faceq' : 'name' },
-      { t: 'Pra longe (dirigir, TV)', nextFn: () => needsFrame ? 'faceq' : 'name' },
-      { t: 'Perto e longe (multifocal)', nextFn: () => needsFrame ? 'faceq' : 'name' },
-      { t: 'Computador (filtro de luz azul)', nextFn: () => needsFrame ? 'faceq' : 'name' }
+      { t: 'Pra perto (ler, usar celular)', nextFn: () => needsFrame ? 'faceq' : 'final' },
+      { t: 'Pra longe (dirigir, assistir TV)', nextFn: () => needsFrame ? 'faceq' : 'final' },
+      { t: 'Para perto e longe (lentes multifocais)', nextFn: () => needsFrame ? 'faceq' : 'final' },
+      { t: 'Para computador/telas (com filtro de luz azul)', nextFn: () => needsFrame ? 'faceq' : 'final' },
+      { t: 'Ainda não sei (quero ajuda para decidir)', nextFn: () => needsFrame ? 'faceq' : 'final' }
     ],
-    otherNextFn: () => needsFrame ? 'faceq' : 'name'
+    otherNextFn: () => needsFrame ? 'faceq' : 'final'
   },
 
   /* ---- B) óculos de sol ---- */
@@ -379,10 +383,10 @@ const STEPS = {
     q: 'Tem a receita/prescrição da lente?',
     sub: 'A de lente de contato é diferente da do óculos.', key: 'Receita', progress: 68,
     options: [
-      { t: 'Sim, tenho', next: 'name' },
-      { t: 'Não tenho', next: 'name' }
+      { t: 'Sim, tenho', next: 'final' },
+      { t: 'Não tenho', next: 'final' }
     ],
-    otherNext: 'name'
+    otherNext: 'final'
   },
 
   /* ---- D) só a lente ---- */
@@ -405,7 +409,7 @@ const STEPS = {
   d3: {
     q: 'Sua armação atual 📸', info: true, progress: 66,
     sub: 'No WhatsApp, vamos te pedir uma foto da sua armação atual — assim conferimos o encaixe da lente certinho. Deixa ela por perto!',
-    next: 'name'
+    next: 'final'
   },
 
   /* ---- fechamento ---- */
@@ -595,7 +599,7 @@ function renderFacePick(isBack) {
       const f = FACES[+btn.dataset.i];
       saveHistory('facepick');
       answers.push({ k: 'Formato do rosto', v: f.n });
-      go('name');
+      go('final');
     };
   });
   bindBack();
@@ -638,20 +642,29 @@ function renderFaces(isBack) {
   $('faceGo').onclick = () => {
     saveHistory('faces');
     answers.push({ k: 'Formato do rosto', v: sel.n });
-    go('name');
+    go('final');
   };
   $('faceSkip').onclick = () => {
     saveHistory('faces');
     answers.push({ k: 'Formato do rosto', v: 'Prefere ver com a atendente' });
-    go('name');
+    go('final');
   };
   bindBack();
 }
 
 function renderFinal() {
   setProgress(100);
-  const nome = (answers.find(a => a.k === 'Nome') || {}).v || '';
-  const rows = answers.map(a => `<li><b>${a.k}</b><span>${a.v}</span></li>`).join('');
+  const uniqueAnswers = [];
+  const seenKeys = new Set();
+  for (const ans of answers) {
+    if (!seenKeys.has(ans.k)) {
+      seenKeys.add(ans.k);
+      uniqueAnswers.push(ans);
+    }
+  }
+
+  const nome = (uniqueAnswers.find(a => a.k === 'Nome') || {}).v || '';
+  const rows = uniqueAnswers.map(a => `<li><b>${a.k}</b><span>${a.v}</span></li>`).join('');
   screen.innerHTML = `
     <div class="stagger">
       ${badge}
@@ -666,12 +679,38 @@ function renderFinal() {
       <p class="redirect-text">Atendimento humano · Você não paga nada por essa conversa · Entrega na sua casa</p>
     </div>`;
   $('btnWhats').onclick = () => {
-    const lines = [
-      `Oi! Vim pelo quiz da ${CONFIG.otica} (cod: ${ORIGEM})`,
-      '',
-      ...answers.map(a => `▪️ ${a.k}: ${a.v}`)
-    ];
-    const url = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(lines.join('\n'));
+    const emojiMap = {
+      'Produto': '✨',
+      'O que precisa': '📦',
+      'Receita': '📄',
+      'Uso': '🎯',
+      'Marca': '🏷️',
+      'Grau no solar': '☀️',
+      'Experiência': '🔄',
+      'Tipo de lente': '👁️',
+      'Tipo': '🔍',
+      'Formato do rosto': '👤'
+    };
+
+    const msgLines = [];
+    msgLines.push(`*👓 ${CONFIG.otica.toUpperCase()} — RESUMO DO QUIZ*`);
+    msgLines.push(`Olá! Vim pelo quiz da Nossa Ótica. Aqui estão meus dados:`);
+    msgLines.push(``);
+    msgLines.push(`👤 *Nome:* ${nome}`);
+    msgLines.push(`📍 *Origem:* ${ORIGEM}`);
+    msgLines.push(``);
+    msgLines.push(`📋 *DETALHES DO PEDIDO:*`);
+
+    uniqueAnswers.forEach(a => {
+      if (a.k === 'Nome') return;
+      const emoji = emojiMap[a.k] || '▪️';
+      msgLines.push(`${emoji} *${a.k}:* ${a.v}`);
+    });
+
+    msgLines.push(``);
+    msgLines.push(`💬 Aguardo seu retorno para prosseguirmos!`);
+
+    const url = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msgLines.join('\n'));
     window.open(url, '_blank');
   };
 }
